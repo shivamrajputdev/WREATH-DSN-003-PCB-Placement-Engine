@@ -1,0 +1,212 @@
+# WREATH Project Handover: Repository Audit and Workflow Finalization
+
+You are taking over the WREATH project from the previous work session. Your immediate responsibility is to **audit the current repository, recover the actual state of unfinished work, finalize the migration workflow and governance documentation, and prepare a verified handover for the next development phase.**
+
+Read the handover document first:
+
+`WREATH_Shivam_Workflow_Handover.md`
+
+If it is not present in the repository, locate the supplied handover file or ask for its location. Do not silently skip it.
+
+## 1. First: Establish the Actual Repository State
+
+Before modifying anything, inspect and report:
+
+- Current working directory and Git repository root.
+- Current branch and upstream branch, if configured.
+- `git status --short --branch`.
+- Recent commit history.
+- Configured remotes and whether the current branch tracks a remote.
+- Existing modified, staged, and untracked files.
+- Current contents and Git diffs for every file involved in the previous OpenCode session.
+- Whether the previous workflow and migration documentation changes actually landed.
+- Whether the remote GitHub repository contains the expected commits.
+
+The previously observed remote was:
+
+`https://github.com/kushagra7-hack/DSN001-DSN002.git`
+
+Treat this as a lead to verify, not an unquestionable source of truth.
+
+**Do not assume the previous session successfully committed or pushed anything.** Its available log shows failed editing attempts and does not establish a successful final commit or push.
+
+Preserve all existing work. Do not reset, clean, overwrite, or discard files merely to make the working tree look tidy.
+
+## 2. Read the Governance Sources Before Making Changes
+
+Inspect the repository's applicable:
+
+- `AGENTS.md` and other agent instructions.
+- Architecture decision records A–I and relevant sub-decisions.
+- Shared-contract and WHIR specifications.
+- DSN-001 and DSN-002 tickets and SOPs.
+- Migration registry, workflow, prompt library, and verification documents.
+- Acceptance matrices, traceability records, and source references.
+- Existing approval records and unresolved-decision lists.
+
+Verify that the documents you find are authoritative and current. If a referenced source is absent, record it as missing. Do not invent approvals or infer approval from a recommendation, generated document, successful test, or previous agent response.
+
+Preserve the distinction between:
+
+- Approved decisions.
+- Conditional or partial approvals.
+- Proposed decisions.
+- Open questions.
+- Deferred scope.
+- Blocked work.
+- Unverified claims or missing evidence.
+
+Do not silently change a decision's status. Record evidence and request owner approval when required.
+
+## 3. Finalize the Workflow Changes
+
+Audit and complete these workflow areas, reusing valid existing work rather than recreating documents unnecessarily.
+
+### A. Migration authorization gate
+
+Define the mandatory prerequisites before implementation begins:
+
+- Relevant architecture and ownership decisions are approved.
+- DSN-001 and DSN-002 scope and acceptance criteria are explicit.
+- Shared-contract ownership and dependencies are settled sufficiently for the first implementation slice.
+- Persistence, versioning, identity, and error-handling decisions required by that slice are resolved.
+- Required source evidence and approval records are available.
+- Tests, fixtures, acceptance criteria, and verification procedures are defined.
+- Deferred and excluded work is documented.
+
+If a prerequisite remains unresolved, identify the exact blocker and its impact. Do not start broad engine migration to work around an unresolved architecture decision.
+
+### B. Decision governance
+
+Make it clear who can propose, review, approve, defer, or reopen decisions. Maintain traceability between the decision, its evidence, its approval, and affected implementation work.
+
+Generated documents and agent recommendations must never become owner approvals automatically.
+
+### C. Acceptance criteria and traceability
+
+Check the acceptance matrix for:
+
+- Stable criterion IDs.
+- Links to parent requirements and architecture decisions.
+- Explicit verification methods and evidence.
+- Clear pass, fail, blocked, and unverified outcomes.
+- No accidental deletion, duplication, or double-counting of criteria.
+- Consistent status between tickets, SOPs, decision records, and verification documents.
+
+Preserve established IDs unless a documented reason requires a change.
+
+### D. Migration checkpoints
+
+Define checkpoints that separate:
+
+1. Repository and source audit.
+2. Architecture and contract approval.
+3. Minimal implementation-slice authorization.
+4. Implementation.
+5. Automated and manual verification.
+6. Integration and regression checks.
+7. Review, commit, and remote synchronization.
+8. Final acceptance and handover.
+
+Each checkpoint must have explicit entry conditions, required evidence, exit conditions, and blocker handling.
+
+### E. Agent and Git workflow
+
+Document safe operating rules:
+
+- Inspect before editing.
+- Make focused changes.
+- Review diffs before staging.
+- Avoid broad staging commands such as `git add .` or `git add -A`.
+- Do not overwrite unrelated user changes.
+- Do not force-push.
+- Do not claim a push succeeded without verifying the remote result.
+- Respect the repository's permissions and approval requirements.
+- Report commands that failed and checks that were not run.
+
+Agent permission settings are not a security sandbox. Do not rely on them as a substitute for review.
+
+## 4. Preserve the DSN-001 and DSN-002 Boundaries
+
+### DSN-001: Schematic engine
+
+The proposed minimum scope includes a single schematic sheet, symbol instances and pins, wires and junctions, connectivity, persistence, transforms, properties and reference designators, CRUD operations, structured errors, tests, and a documented versioned API contract.
+
+The API-facing boundary should eventually support both UI/human callers and automation clients. This does not automatically require a separately deployed microservice or a complete UI.
+
+Do not silently include ERC, PCB placement/routing, AI/RL, or full KiCad compatibility in the minimum version.
+
+### DSN-002: Component and library engine
+
+The proposed scope includes reusable component metadata, symbol definitions and pins, footprints and pads, library identity/versioning, associations, pin-to-pad mapping, deterministic lookup, validation, persistence, and a documented API contract.
+
+It does not own placed schematic instances, schematic connectivity, PCB placement/routing, ERC, or DRC.
+
+### Shared contract
+
+Verify the actual approved source before freezing the shared interface. Neither engine should acquire an accidental dependency on the other engine's concrete implementation if the approved architecture specifies a shared-contract boundary.
+
+These are scope summaries, not evidence that the tickets or architecture decisions have received final approval. Verify the actual approval records.
+
+## 5. Validate the Result
+
+After editing:
+
+- Review every changed file and the complete Git diff.
+- Check Markdown links and referenced file paths.
+- Check consistency of decision statuses and requirement IDs.
+- Run relevant repository-defined documentation checks and tests.
+- Record every command that failed, every test not run, and every unverifiable claim.
+- Confirm no unrelated source code, configuration, or user work was changed.
+- Confirm the resulting documents agree with one another.
+
+Do not report a test as passing if it was not executed. Do not describe documentation-only validation as engine validation.
+
+## 6. GitHub Integration
+
+First establish the current branch, remotes, repository permissions, and authorization to publish.
+
+Do not push without explicit authorization from the project owner. If authorization is absent, finish the local audit, provide a proposed commit summary, and stop before pushing.
+
+If publishing is authorized:
+
+1. Stage only the intended files.
+2. Inspect the staged diff.
+3. Commit with a focused, descriptive message.
+4. Push to the intended branch without force-pushing.
+5. Verify the remote branch and commit afterward.
+6. Report the exact commit hash and push verification evidence.
+
+Never claim that GitHub is updated based only on a configured remote or a successful local commit.
+
+## 7. Immediate Deliverables
+
+Produce or update the appropriate existing documents, avoiding redundant files. Then report:
+
+1. **Repository baseline:** branch, status, remote, and recent history.
+2. **Recovery report:** which previous changes existed, which were missing, and which required correction.
+3. **Workflow changes:** files changed and the purpose of each change.
+4. **Governance audit:** approved decisions, unresolved decisions, missing evidence, and blockers.
+5. **Acceptance matrix audit:** broken links, missing tests, duplicated criteria, or status inconsistencies.
+6. **Validation results:** exact checks run and their outcomes.
+7. **Git integration:** commit hash and verified push status, or a clear explanation of why publishing was not performed.
+8. **Next-step verdict:** choose one:
+   - `READY FOR FIRST IMPLEMENTATION SLICE`
+   - `READY WITH EXPLICITLY ACCEPTED LIMITATIONS`
+   - `NOT READY`
+
+For a readiness verdict, list the evidence and unmet conditions. Never declare readiness merely because the documentation looks complete.
+
+## 8. Hard Stop Conditions
+
+Do not:
+
+- Begin broad DSN-001 or DSN-002 engine migration during this handover task.
+- Invent missing source files, approvals, tests, or evidence.
+- Convert proposed decisions into approved decisions.
+- Freeze unresolved shared interfaces.
+- Delete or overwrite unreviewed work.
+- Commit or push unrelated changes.
+- Claim successful validation or GitHub publication without evidence.
+
+**Start with the read-only repository audit. Report the baseline and blockers first. Then complete the workflow changes in small, reviewable steps. Preserve the current project state and leave Shivam's next actions unambiguous.**
